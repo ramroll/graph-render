@@ -1,4 +1,5 @@
-var exportSVG = function(svg) {
+var exportSVG = function(svg, filename = 'myAwesomeSVG') {
+
   // first create a clone of our svg node so we don't mess the original one
   var clone = svg.cloneNode(true);
   // parse the styles
@@ -23,10 +24,12 @@ var exportSVG = function(svg) {
 
   var a = document.createElement('a');
   a.href = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgData.replace(/></g, '>\n\r<'));
-  a.download = 'myAwesomeSVG.svg';
+  a.download = filename
   a.innerHTML = 'download the svg file';
   document.body.appendChild(a);
 
+
+  a.click();
 };
 
 var parseStyles = function(svg) {

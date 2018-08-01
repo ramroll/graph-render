@@ -28,7 +28,11 @@ class Tree{
   constructor(options) {
     this.hierarchyData = d3.hierarchy(options.data)
     this.tree = d3.tree()
+      .separation((a, b) => {
+        return a.parent === b.parent ? 1 : 1
+      })
     this.renderData = this.tree(this.hierarchyData)
+
     this.scale = createScaleFunction(
       options.width,
       options.height,
@@ -58,7 +62,7 @@ class Tree{
       .attr('cx', R)
       .attr('cy', R)
       .attr('stroke', 'black')
-      .attr('fill', 'white')
+      .attr('fill', d => d.data.color || 'white')
 
     gNode.append('text')
       .attr('x', R)

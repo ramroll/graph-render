@@ -3,7 +3,14 @@ module.exports = {
   devtool : 'eval-source-map',
   entry: './src/main.js',
   devServer: {
-    port: 5000
+    after : app => {
+
+      app.get('*', function(req, res){
+        res.sendFile(__dirname + '/index.html')
+      })
+
+    },
+    port: 5000,
   },
   module: {
     rules: [{
