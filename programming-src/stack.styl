@@ -1,0 +1,67 @@
+defaultStackOption = {
+  mode : 'last-fill',
+  lastChildSize : auto
+}
+
+// 因为stylus中没有{...defaultOptions, ...options}
+// 这种合并默认值和用户传入值的方法， 所以需要写一个函数
+val(key, defaultOptions, options) 
+  if options[key]
+    options[key]
+  else if defaultOptions[key] 
+    defaultOptions[key]
+
+
+stack($orientation = 'horizontal', options = {})
+  $mode = val('mode', defaultStackOptions, options)
+  display flex
+  width 100%
+  align-items center
+  if $orientation == 'horizontal' 
+    flex-direction row 
+    height 100%
+    > *
+      height 100%
+    > *:last-child
+      width val('lastChildSize', defaultStackOption, options)
+
+  else 
+    flex-direction column 
+    width 100%
+    > *
+      width 100%
+    > *:last-child
+      height val('lastChildSize', defaultStackOption, options)
+
+  if $mode == 'first-fill' 
+    > *
+      flex 1
+    > *:last-child
+      flex unset 
+      flex-shrink 0
+  else if $mode == 'center-fill'
+    > *
+      flex 1
+    > *:last-child
+    > *:first-child
+      flex unset
+      flex-shrink 0
+  else if $mode == 'last-fill'
+    > *
+      flex 1
+    > *:first-child
+      flex unset
+      flex-shrink 0
+
+
+  else if $mode == 'wrap'
+    flex-wrap wrap
+  else if $mode == 'equal'
+    justify-content center
+    > *
+      flex 1
+  
+
+      
+  
+    

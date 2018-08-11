@@ -1,3 +1,4 @@
+const express = require('express')
 module.exports = {
   mode: 'development',
   devtool : 'eval-source-map',
@@ -5,8 +6,9 @@ module.exports = {
   devServer: {
     after : app => {
 
-      app.get('*', function(req, res){
-        res.sendFile(__dirname + '/index.html')
+      app.use('/assets', express.static(__dirname + '/assets'))
+      app.get('/*', function(req, res){
+        res.sendFile(__dirname + '/graph.html')
       })
 
     },
@@ -24,6 +26,7 @@ module.exports = {
           ],
           plugins: [
             "babel-plugin-transform-class-properties"
+
           ]
 
         }
