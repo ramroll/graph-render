@@ -35,7 +35,7 @@ class Render {
           }
         }).filter(x => x !== null)
       )
-
+      
     console.log(orders)
     this.orders = orders 
     this.history = []
@@ -44,6 +44,7 @@ class Render {
 
   back(){
 
+    this.audio.pause()
     const {no, lines} = this.history.pop()
     this.playing = lines
     this.orders.unshift(no)
@@ -98,6 +99,7 @@ class Render {
         lines : JSON.parse( JSON.stringify( this.playing ) )
       })
       if (this.currentNo === undefined) {
+        this.audio.pause()
         return {code : 'STOP'}
       }
       let p = this.playing.length
