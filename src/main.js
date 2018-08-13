@@ -1,6 +1,8 @@
 import 'babel-polyfill'
 import merge_sort_tree from './pages/merge-sort-tree'
-import arrays from './pages/arrays'
+import bsearch from './pages/bsearch'
+import insert from './pages/insert'
+import insertionSort from './pages/insertion-sort'
 import qs from 'qs'
 
 
@@ -12,7 +14,13 @@ switch(pathname) {
   case '/merge-sort-tree' :
     merge_sort_tree({ query })
     break
-  case '/arrays' :
-    arrays()
+  case '/insert' : 
+    insert()
+    break
+  case '/insertion-sort' : 
+    insertionSort()
+    break
+  case '/bsearch' :
+    bsearch()
     break
 }
