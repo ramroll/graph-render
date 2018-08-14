@@ -27,6 +27,9 @@ function insert(A, x) {
   return rows
 }
 
+
+
+
 export default () => {
   const rows = insert([2,4,7,9,13], 8)
   array_render(
