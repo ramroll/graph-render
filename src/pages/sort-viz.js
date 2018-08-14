@@ -1,4 +1,5 @@
 import arrayViz from '../lib/array_viz'
+import '../lib/draw'
 function swap(A, i, j) {
   const t = A[i]
   A[i] = A[j]
@@ -12,7 +13,8 @@ function bubble_sort(A){
       rows.push({
         list : [...A],
         highlights : [j, j+1],
-        i
+        i,
+        x : j + 1
       })
       if( A[j] > A[j+1] ) {
         swap(A, j, j+1)
@@ -20,7 +22,8 @@ function bubble_sort(A){
       rows.push({
         list : [...A],
         highlights : [j, j+1],
-        i
+        i,
+        x : j + 1
       })
     }
   }
@@ -36,9 +39,15 @@ export default () => {
   const A = [6, 3, 5, 8, 1, 4]
   const rows = bubble_sort(A)
   const next = arrayViz(rows, (d, row, i) => {
+
+    if(row.x === i) {
+      return `fill:blue;stroke:black`
+    }
     if(row.highlights.indexOf(i) !== -1) {
       return `fill:#0adefa;stroke:black`
     }
+
+
 
     if(row.i === 0) {
       return `fill:#50e750;stroke:black`

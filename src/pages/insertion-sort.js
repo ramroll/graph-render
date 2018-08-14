@@ -31,17 +31,57 @@ function insertion_sort(A){
   return rows
 }
 
+function swap(A, i, j) {
+  const t = A[i]
+  A[i] = A[j]
+  A[j] = t
+}
+function bubble_sort(A){
+
+  const rows = [{
+    list : [...A],
+  }]
+  for(let i = A.length - 1; i >= 1; i--) {
+    for(let j = 1; j <= i; j++) {
+      if( A[j-1] > A[j] ) {
+        swap(A, j-1, j)
+      }
+      rows.push({
+        list: [...A],
+        j: j,
+        highlights : j,
+        label : `j=${j}`
+      })
+    }
+  }
+  // rows.push({
+  //   list : [...A],
+  //   i : 0,
+  //   highlights : []
+  // })
+  return rows
+}
+
 export default () => {
-  const rows = insertion_sort([5, 8, 1, 3, 2, 4, 9])
+  const rows = bubble_sort([5, 8, 1, 3, 2, 4, 6])
   array_render(
     rows,
     (d, row, i) => {
-      if(i <= row.i) {
+      if(row.j === i) {
         return `fill:#56ff56;stroke:black`
       }
       return `fill:white;stroke:black`
-      
-
     }
   )
+  // array_render(
+  //   rows,
+  //   (d, row, i) => {
+  //     if(i <= row.i) {
+  //       return `fill:#56ff56;stroke:black`
+  //     }
+  //     return `fill:white;stroke:black`
+      
+
+  //   }
+  // )
 }
