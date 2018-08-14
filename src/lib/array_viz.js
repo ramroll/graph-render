@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
+import './viz.styl'
+import deepEqual from 'deep-equal'
 
-
-document.querySelector('#btn').remove()
 const G = 0.2
 
 function render_matrix(i, arrays, styleRender = null) {
@@ -31,14 +31,12 @@ export default (rows, styleRender = () => {
 
 }) => {
 
-  const L = 96 
+  const L = 96
 
-  const num = rows[0].list.length 
+  const num = rows[0].list.length
   const l = d3.scaleLinear()
     .domain([0, 1])
     .range(0, L)
-
-
 
 
   const W = document.documentElement.clientWidth
@@ -46,23 +44,27 @@ export default (rows, styleRender = () => {
   const g = d3.select('body')
     .append('svg')
     .attr('width', W)
-    .attr('height', H) 
+    .attr('height', H)
     .append('g')
 
 
   const totalW = num * L + (num - 1) * G * L
   const totalH = L / 2
   const g1 = g.append('g')
-    .attr('transform', `translate(${W/2 - totalW / 2},${H/2 - totalH /2})`)
+    .attr('transform', `translate(${W / 2 - totalW / 2},${H / 2 - totalH / 2})`)
 
 
   let i = 0
   let inited = false
+  let lastRow = null
   function next() {
+    const row = rows[i]
     const renderSet = render_matrix(i++, rows, styleRender)
+    const changes = lastRow ? compareChange(lastRow.list, row.list) : []
+    lastRow = row
 
-    if (!inited) {
-
+    if(!inited) {
+      inited = true
       const ceil = g1.selectAll('g.g-ceil')
         .data(renderSet)
         .enter()
@@ -70,37 +72,58 @@ export default (rows, styleRender = () => {
         .attr('class', 'g-ceil')
         .attr('transform', d => `translate(${d.x * L}, ${0})`)
 
-
-      ceil.append('rect')
+      const rect = ceil.append('rect')
         .attr('width', L)
         .attr('class', 'ceil')
         .attr('height', L)
-        .attr('style', (d) => {
-          return d.style || `fill:white;stroke:black;`
-        })
         .attr('stroke-width', '1')
 
       ceil.append('text')
-        .text(d => d.v)
         .attr('x', L / 2)
         .attr('y', L / 2 + 16)
         .attr('style', 'font-size:48px')
         .attr('text-anchor', 'middle')
-        .attr('fill', d => {
-          if (d.highlight) {
-            return 'white'
-          }
-          return 'black'
-        })
 
-    } else {
-      g1.selectAll('g.g-ceil')
-        .data(renderSet)
-        .update()
 
     }
+    function update() {
+
+      g1.selectAll('g.g-ceil rect')
+        .data(renderSet)
+        .attr('style', (d) => {
+          return d.style || `fill:white;stroke:black;`
+        })
+
+      let text = g1.selectAll('g.g-ceil text')
+        .data(renderSet)
+        .text(d => d.v)
+
+      if(changes.length > 0) {
+        text = text.attr('fill', d => changes.indexOf(d) !== -1 ? 'red' : 'black')
+          // .transition()
+          // .duration(1000)
+      }
+
+      text.attr('fill', d => {
+        if (d.highlight) {
+          return 'white'
+        }
+        return 'black'
+      })
+    }
+
+    update()
   }
-
   return next
+}
 
+
+function compareChange(a, b) {
+  const keys = []
+  for(let i = 0; i < a.length; i++) {
+    if(a[i] !== b[i]) {
+      keys.push(b[i])
+    }
+  }
+  return keys
 }

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "pro": "webpack-dev-server --config programming.config.js",
+    "viz": "webpack-dev-server --config viz.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -29,6 +30,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "d3": "^5.5.0",
+    "deep-equal": "^1.0.1",
     "html2canvas": "^1.0.0-alpha.12",
     "jsx-doc": "^1.0.5"
   }

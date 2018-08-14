@@ -5,7 +5,6 @@ module.exports = {
   entry: './src/main.js',
   devServer: {
     after : app => {
-
       app.use('/assets', express.static(__dirname + '/assets'))
       app.get('/*', function(req, res){
         res.sendFile(__dirname + '/graph.html')

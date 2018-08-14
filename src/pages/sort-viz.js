@@ -46,7 +46,8 @@ export default () => {
     if(i > row.i) {
       return `fill:#50e750;stroke:black`
     }
-  }) 
+    return `fill:white;stroke:black`
+  })
   document.addEventListener('keyup', (e) => {
     if(e.keyCode === 39) {
       next()
