@@ -20,7 +20,7 @@ const  y = d3.scaleLinear().range([600, 100])
 
 const M = parseInt( query.m || 10 )
 
-const colors = ['#23e82a', '#01f4df',  'red', '##c0f201', '#ff4800', '#ffd602', '#ff00ea']
+const colors = ['#23e82a', '#01f4df',  'red', '#c0f201', '#ff4800', '#ffd602', '#ff00ea']
 
 // Setup line generator
 const  line = d3.line()
@@ -91,7 +91,7 @@ function draw() {
       .transition()
       .duration(500)
       .attr('d', line)
-      .attr('stroke', color)
+      .style('stroke', color)
   })
 
 }
