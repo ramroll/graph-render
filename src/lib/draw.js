@@ -13,7 +13,7 @@ const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 ctx.lineWidth = 3
 
-const colors = ['red', '#0018c5']
+const colors = ['#23e82a', '#01f4df',  'red', '##c0f201', '#ff4800', '#ffd602', '#ff00ea']
 
 let lastX = null
 let lastY = null
@@ -30,6 +30,11 @@ document.addEventListener('keyup', e => {
   if(e.keyCode === 192) {
     ctx.clearRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
   }
+
+  if(e.keyCode === 67) {
+    c++
+  }
+  
   console.log(e.keyCode)
 })
 
@@ -39,6 +44,10 @@ canvas.addEventListener('mouseup', (e) => {
   down = false
 })
 
+function randInt(n) {
+  return Math.floor( Math.random() * n ) + 1
+}
+
 canvas.addEventListener('mousemove', (e) => {
   const { clientX, clientY } = e
 
@@ -46,7 +55,9 @@ canvas.addEventListener('mousemove', (e) => {
     ctx.beginPath()
     ctx.moveTo(lastX, lastY)
     ctx.lineTo(clientX, clientY)
-    ctx.strokeStyle = colors[c]
+    ctx.moveTo(lastX + randInt(4), lastY + randInt(4))
+    ctx.lineTo(clientX+ randInt(4), clientY + randInt(4))
+    ctx.strokeStyle = colors[c % colors.length]
     ctx.stroke()
   }
   lastX = clientX
