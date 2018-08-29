@@ -6,14 +6,16 @@ function gen_tree_data(tree, n) {
 
 
   tree.name = n
-  if(n > 2) {
-    tree.color = '#d3d3d3'
+  if(n <= 1) {
+    tree.color = '#03bbf4'
+    tree.stroke = '#03bbf4'
+    tree.fontColor = 'white'
   }
 
-  if(n > 2) {
+  if(n >= 2) {
 
     tree.children = []
-    const a = Math.floor ( n / 2 )
+    const a = Math.ceil ( n / 2 )
     const b = n - a
 
     if(a >= 1) {
@@ -34,7 +36,7 @@ function gen_tree_data(tree, n) {
 
 function run({query}){
   const treeData = {}
-  if(!query.n || !query.file) {
+  if(!query.n) {
     console.error('参数错误')
     return
   }
@@ -55,9 +57,12 @@ function run({query}){
   tree.draw()
 
 
-  setTimeout( () => {
-    exportSVG(document.getElementById('tree'), query.file)
-  }, 100)
+  if (query.file) {
+    setTimeout(() => {
+
+      exportSVG(document.getElementById('tree'), query.file)
+    }, 100)
+  }
 }
 
 export default run

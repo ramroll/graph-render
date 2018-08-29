@@ -61,13 +61,16 @@ class Tree{
       .attr('r', R)
       .attr('cx', R)
       .attr('cy', R)
-      .attr('stroke', 'black')
+      .attr('stroke', d=> d.data.stroke || 'black')
       .attr('fill', d => d.data.color || 'white')
 
     gNode.append('text')
       .attr('x', R)
       .attr('y', R + 8)
-      .attr('fill', 'black')
+      .attr('fill', d => {
+        return d.data.fontColor || 'black'
+      })
+      // .attr('style', d => d.fontColor || 'black')
       .attr('font-size', 24)
       .attr('text-anchor', 'middle')
       .text(d => d.data.name)
