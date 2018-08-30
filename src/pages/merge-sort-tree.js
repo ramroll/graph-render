@@ -7,12 +7,12 @@ function gen_tree_data(tree, n) {
 
   tree.name = n
   if(n <= 1) {
-    tree.color = '#03bbf4'
-    tree.stroke = '#03bbf4'
-    tree.fontColor = 'white'
+    // tree.color = '#03bbf4'
+    // tree.stroke = '#03bbf4'
+    // tree.fontColor = 'white'
   }
 
-  if(n >= 2) {
+  if(n > 2) {
 
     tree.children = []
     const a = Math.ceil ( n / 2 )
