@@ -12,14 +12,15 @@ async function wait(ms) {
 
 export default class ArrayViz extends Component {
 
-  constructor(){
+  constructor(props){
     super()
 
     this.state = {
-      data : [1,2,3,4,5,6],
+      data : [...props.array.initialData],
       swaping : null,
       changeAt : null,
-      animating : false
+      animating : false,
+      cursor : {...props.array.cursor}
     }
 
     this.swap = this.swap.bind(this)
@@ -27,14 +28,24 @@ export default class ArrayViz extends Component {
 
 
   componentDidMount(){
+    this.props.array.registerHandler(this.handleChange)
 
-    let i = 0
-    setInterval( () => {
-      const rnd1 = Math.floor( Math.random() * 6 )
-      const rnd2 = Math.floor( Math.random() * 6 )
-      if(rnd1 !== rnd2)
-      this.swap(rnd1, rnd2)
-    }, 2000)
+  }
+
+  handleChange = (action, data) => {
+    switch(action.type) {
+      case 'VALUE' : {
+        this.changeAt(action.idx, action.value)
+        break
+      }
+      case 'CURSOR' : {
+        this.setState({
+          cursor : {...action.cursor}
+        })
+        break
+      }
+    }
+
   }
 
   async setStateASync(state) {
@@ -133,14 +144,33 @@ export default class ArrayViz extends Component {
 
   render(){
     const A = this.state.data
-    const {swaping} = this.state
+    const {swaping, cursor} = this.state
     const idx = swaping ? swaping.idx : []
     const [x,y] = idx
-    return <div className='array-block'>
+
+
+    const cursors = Object.keys(cursor).map(key => {return {label : key, idx : cursor[key]}})
+
+    return <div style={this.props.style} className='array-block'>
+      <h3>{this.props.title}</h3>
+      <div className='row'>
+        {A.map( (i, j) => {
+          return <div key={j} className='idx'>{j}</div>
+        })}
+      </div>
       <div className='row'>
         {A.map( (i, j) => <Cell
           swaping={x === j || y === j}
           style={this.getStyle(i, j)} i={i} j={j} />)}
+      </div>
+      <div className='cursors'>
+        {cursors.map(({ label, idx }) => {
+          return <div className='cursor' key={label} style={{left : (idx * 70) + 'px'}}>
+            <img src='/assets/uparrow.png' />
+            <div>{label}={idx}</div>
+          </div>
+        })}
+
       </div>
     </div>
 
@@ -176,8 +206,7 @@ class Cell extends React.Component{
               changing: false,
               i: nextProps.i
             })
-
-          }, 300)
+          }, 800)
         })
       }
     }
@@ -190,12 +219,12 @@ class Cell extends React.Component{
     return {
       zIndex : swaping ? 1 : 0,
       color : changing ? 'red' : 'black'
-    }
+      }
   }
 
   render() {
     const { j, style } = this.props
-    const { i } = this.state
+    const { i  } = this.state
 
     return <div className='cell' key={j}
       style={{...this.cellStyle(i, j), ...style}}

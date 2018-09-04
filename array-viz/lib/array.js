@@ -1,26 +1,27 @@
-export default function (data) {
+
+let queue = []
+let id = 0
+function array (data, cursor) {
 
   class VizArray{
 
     constructor(data){
+
       this.data = [...data]
+      this.initialData = [...data]
       this.handlers = []
       this.queue = []
-
+      this.cursor = {...cursor}
+      this.id = ++id
     }
 
 
-    start(){
-
-      setInterval( () => {
-        const action = this.queue.shift()
-
-        this.handlers.forEach(h => {
-          h
-        })
 
 
-      }, 1000)
+    run = ({action, data}) => {
+      this.handlers.forEach(h => {
+        h(action, data)
+      })
     }
 
     registerHandler(handler){
@@ -30,6 +31,13 @@ export default function (data) {
       }
     }
 
+
+    updateCursor(obj) {
+      this.notifyChange({
+        type : 'CURSOR',
+        cursor : obj
+      })
+    }
 
 
     swap(i, j) {
@@ -44,14 +52,12 @@ export default function (data) {
     }
 
     notifyChange = action => {
-
-      this.queue.push({action, data : [...this.data]})
-      // this.handlers.forEach(h => {
-      //   return {
-      //     data: [...this.data],
-      //     action
-      //   }
-      // })
+      queue.push({
+        id : this.id,
+        action,
+        target : this,
+        data: [...this.data]
+      })
     }
 
   }
@@ -59,10 +65,12 @@ export default function (data) {
 
   const handler = {
     get : function(target, name) {
-      if(name === 'data') {
-        return target.data
+      if(name === 'length') {return target.data.length}
+      if(name.match(/^\d+$/)) {
+        name = parseInt(name)
+        return target.data[name]
       }
-      return target.data[name]
+      return target[name]
     },
     set : function(target, name, value) {
       const idx = parseInt(name)
@@ -79,3 +87,12 @@ export default function (data) {
   return new Proxy(new VizArray(data), handler)
 }
 
+array.trigger = () => {
+  const item = queue.shift()
+  if (!item) {
+    return
+  }
+  item.target.run(item)
+}
+
+module.exports = array

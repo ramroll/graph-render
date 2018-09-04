@@ -1,10 +1,20 @@
+@import './stack.styl'
+html
+body
+#app
+  width 100%
+  height 100%
+
+.stage
+  height 100%
+  width 100%
 
 .cell
   position relative
   width 64px
   height 64px
   font-size 32px
-  transition color .3s ease
+  transition color .8s ease
   background-color white
   margin-right 6px
   box-sizing border-box
@@ -15,6 +25,47 @@
   background-color white
   will-change transform
 
+
+.idx
+  width 64px
+  height 48px
+  display flex
+  justify-content center
+  align-items center
+  margin-right 6px
+  font-size 24Px
+  color #666
+.cursors
+  position relative
+.cursor
+  position absolute
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  width 64px
+  font-size 24Px
+  img
+    margin-top 10px
+    width 20px
+
 .row
   display flex
   flex-direction row
+.array-block
+  h3
+    text-align center
+    color #00abff
+
+
+.react-swipe-container
+  background-color #666
+  height 100%
+  > div
+    height 100%
+
+.swipe
+  color white
+  height 100%
+  font-size 48px
+
