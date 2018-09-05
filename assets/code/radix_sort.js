@@ -8,7 +8,6 @@ function radix_sort(A){
     // 将所有数字写入桶中
     A.forEach( number => {
       const digit = ~~ ( ( number % (m * 10) ) / m )
-      console.log(`digit=${digit}`)
       buckets[digit].push(number)
     })
 
