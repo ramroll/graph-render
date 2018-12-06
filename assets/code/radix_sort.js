@@ -1,19 +1,22 @@
 function radix_sort(A){
   const max = Math.max(...A)
-
+  const buckets = Array.from({ length: 10 }, () => [])
+  // 有效数位
   let m = 1
   while(m < max) {
-    const buckets = Array.from({ length: 10 }, () => [])
-
-    // 将所有数字写入桶中
+    // 将数组放入桶中
     A.forEach( number => {
       const digit = ~~ ( ( number % (m * 10) ) / m )
       buckets[digit].push(number)
     })
-
-    // 将数组从桶中拿出
+    // 从桶中取出元素
     let j = 0
-    buckets.forEach(bucket => bucket.forEach(v => A[j++] = v))
+    buckets.forEach(bucket => {
+      while(bucket.length > 0) {
+        A[j++] = bucket.shift()
+      }
+    })
+    // 下一个位置
     m *= 10
   }
 }

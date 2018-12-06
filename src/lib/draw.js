@@ -27,6 +27,10 @@ canvas.addEventListener('mousedown', (e) => {
 })
 
 document.addEventListener('keyup', e => {
+  console.log(e.keyCode)
+  if(e.keyCode >= 49 && e.keyCode <= 58) {
+    c = e.keyCode - 49
+  }
   if(e.keyCode === 192) {
     ctx.clearRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
   }
@@ -55,8 +59,8 @@ canvas.addEventListener('mousemove', (e) => {
     ctx.beginPath()
     ctx.moveTo(lastX, lastY)
     ctx.lineTo(clientX, clientY)
-    ctx.moveTo(lastX + randInt(4), lastY + randInt(4))
-    ctx.lineTo(clientX+ randInt(4), clientY + randInt(4))
+    ctx.moveTo(lastX + randInt(1), lastY + randInt(1))
+    ctx.lineTo(clientX+ randInt(1), clientY + randInt(2))
     ctx.strokeStyle = colors[c % colors.length]
     ctx.stroke()
   }

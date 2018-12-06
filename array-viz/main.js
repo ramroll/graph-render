@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import ArrayViz from './lib/ArrayViz'
 import ReactSwipe from 'react-swipe'
+import '../src/lib/draw'
 
 
 import array from './lib/array'
@@ -49,8 +50,10 @@ class App extends Component {
   }
   render() {
     const list = [
-      'xxxxx',
-      'yyyy'
+      '遍历原数组，累计写入累计数组',
+      '加和累计数组，得到元素位置',
+      '构造结果数组'
+
     ]
     return (
       <div className='stage stack stack-fill-first'>
