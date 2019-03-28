@@ -56,18 +56,21 @@ async function run() {
 
         const prts = []
         for (let arg of args) {
-          if (typeof args === 'object') {
+          if (typeof arg === 'object') {
             prts.push(JSON.stringify(arg))
           }
           else {
-            prts.push(args)
+            if(typeof arg === 'string') {
+              arg = arg.replace(/ /g, '&nbsp;')
+            }
+            prts.push(arg)
           }
         }
 
         return prts.join(' ')
 
       }).map(text => {
-        return <p>{text}</p>
+        return <p dangerouslySetInnerHTML={{__html : text}}></p>
       })
 
       $('#result-viewer').empty().append(<div>{textNodes}</div>)

@@ -2927,11 +2927,9 @@ json5@^0.5.0, json5@^0.5.1:
   version "0.5.1"
   resolved "http://registry.npm.taobao.org/json5/download/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
-jsx-doc@^1.0.4, jsx-doc@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/jsx-doc/-/jsx-doc-1.0.5.tgz#6c38e09514ad60651774fe224ec242a56086782f"
-  dependencies:
-    jsx-doc "^1.0.4"
+jsx-doc@^1.0.7:
+  version "1.0.7"
+  resolved "http://registry.npm.taobao.org/jsx-doc/download/jsx-doc-1.0.7.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fjsx-doc%2Fdownload%2Fjsx-doc-1.0.7.tgz#e196c446f7894ea5ad9f7ec2cb2d40f8d594e153"
 
 killable@^1.0.0:
   version "1.0.0"
