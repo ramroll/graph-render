@@ -21,11 +21,25 @@ function gen_n_tree(degree) {
             }, {
               name : 2
             }]
+          },{
+            name : 4,
+            children : [{
+              name : 2
+            }, {
+              name : 2
+            }]
           }]
 
         }, {
           name: 8,
           children : [{
+            name : 4,
+            children : [{
+              name : 2
+            }, {
+              name : 2
+            }]
+          },{
             name : 4,
             children : [{
               name : 2

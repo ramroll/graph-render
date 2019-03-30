@@ -9,6 +9,7 @@
     "array-viz": "webpack-dev-server --config array-viz.config.js",
     "viz": "webpack-dev-server --config viz.config.js",
     "plot": "webpack-dev-server --config plot.config.js",
+    "tree-plot": "webpack-dev-server --config tree-plot.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

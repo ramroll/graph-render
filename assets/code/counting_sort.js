@@ -17,10 +17,7 @@ function counting_sort(A){
     C[p] = A[i] // 回写结果
   }
   return C
-
-
 }
-
 
 console.log(counting_sort([5,4,3,2,1]))
 console.log(counting_sort([19,8,3,2,5,4]))
